@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public class UnitMovementController : MonoBehaviour
 {
     private Vector2 movementInput;
+    Vector3 endPosition;
     [SerializeField]
     public Tilemap fogOfWar;
     public Tilemap rangeMap;
@@ -24,11 +25,11 @@ public class UnitMovementController : MonoBehaviour
         UpdateFogOfWar();
         if(movementInput.x == 0 && movementInput.y == 0)
         {
-            hasMoved = false;
+            if(hasMoved == true && transform.position != endPosition)
+                transform.position = Vector3.MoveTowards(transform.position, endPosition, 0.02f);
         }
         else if((movementInput.x != 0 || movementInput.y != 0) && !hasMoved)
         {
-            hasMoved = true;
             GetMovementDirection();
         }
     }
@@ -40,25 +41,30 @@ public class UnitMovementController : MonoBehaviour
         print("dest: " + movementInput.ToString());
         print("curr: " + transform.position.ToString());
         print("*******************************************");
-        Vector3 endPosition;
         print("dest: " + destinationUnitTile.ToString());
         print("curr: " + currentUnitTile.ToString());
-        if (Physics2D.OverlapCircle(movementInput, 0.2f, colliders))
+        if (Physics2D.OverlapCircle(movementInput, 0.1f, colliders))
             Debug.Log("Collider blocked");
         else
         {
             if (Mathf.Abs(destinationUnitTile.x - currentUnitTile.x) <= speed && Mathf.Abs(destinationUnitTile.y - currentUnitTile.y) <= speed)
             {
-                ShowUnitRange(false);
-                endPosition = fogOfWar.CellToWorld(destinationUnitTile);
-                endPosition.x += xOffset;
-                endPosition.y += yOffset;
-                transform.position = endPosition;
+                if (Mathf.Abs(destinationUnitTile.x - currentUnitTile.x) == speed && Mathf.Abs(destinationUnitTile.y - currentUnitTile.y) == speed)
+                    Debug.Log("Corner move outtta range");
+                else
+                {
+                    endPosition = fogOfWar.CellToWorld(destinationUnitTile);
+                    endPosition.x += xOffset;
+                    endPosition.y += yOffset;
+                    hasMoved = true;
+                }
             }
             else
                 Debug.Log("Move outta range");
         }
         movementInput = new Vector2(0,0);
+
+        ShowUnitRange(false);
     }
 
     public void Move(Vector2 input)
@@ -84,11 +90,21 @@ public class UnitMovementController : MonoBehaviour
             for (int y = -speed; y <= speed; y++)
                 if (visible)
                 {
-                    Debug.Log("Tiling range");
+                    if (Mathf.Abs(x) == speed && Mathf.Abs(y) == speed)
+                        continue;
                     rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), highlightTile);
                 }
                 else
                     rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), null);
     }
 
+    public bool GetHasMoved()
+    {
+        return hasMoved;
+    }
+
+    public void SetHasMoved(bool arg)
+    {
+        hasMoved = arg;
+    }
 }

@@ -2,10 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ActivityPhase : int
+{
+    moveOrReplenish = 0,
+    attack = 1,
+    noOperation = 2
+}
+
 public class Unit : MonoBehaviour
 {
     private GameObject selectedGameObject;
     private UnitMovementController umc;
+    public ActivityPhase unitPhase = 0;
+    public int currentHP;
+    public int maxHP;
+    public int attackRange;
 
     private void Awake()
     {
@@ -17,12 +28,24 @@ public class Unit : MonoBehaviour
     {
         umc = this.GetComponent<UnitMovementController>();
         selectedGameObject.SetActive(visible);
-        umc.ShowUnitRange(visible);
+        if (unitPhase == ActivityPhase.moveOrReplenish)
+            umc.ShowUnitRange(visible);
+        else
+            umc.ShowUnitRange(false);
     }
 
     public void Move(Vector2 destination)
     {
         umc = this.GetComponent<UnitMovementController>();
         umc.Move(destination);
+        if (umc.GetHasMoved())
+        {
+            unitPhase = ActivityPhase.attack;
+        }
+    }
+
+    public UnitMovementController GetUMC()
+    {
+        return umc;
     }
 }
