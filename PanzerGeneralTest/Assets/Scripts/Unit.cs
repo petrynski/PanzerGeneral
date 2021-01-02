@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using UnityEngine.UI;
 
 public enum ActivityPhase : int
 {
@@ -17,6 +20,13 @@ public class Unit : MonoBehaviour
     public int currentHP;
     public int maxHP;
     public int attackRange;
+    public Text text;
+
+    private void Start()
+    {
+        text.text = maxHP.ToString();
+        currentHP = maxHP;
+    }
 
     private void Awake()
     {

@@ -18,19 +18,16 @@ public class UnitMovementController : MonoBehaviour
     public int speed = 2;
     public float xOffset = 0.0f;
     public float yOffset = 0.0f;
+    private bool activePlayer = true;
 
     // Update is called once per frame
     void Update()
     {
         UpdateFogOfWar();
-        if(movementInput.x == 0 && movementInput.y == 0)
+        if (movementInput.x == 0 && movementInput.y == 0 && activePlayer)
         {
-            if(hasMoved == true && transform.position != endPosition)
+            if (hasMoved == true && transform.position != endPosition)
                 transform.position = Vector3.MoveTowards(transform.position, endPosition, 0.02f);
-        }
-        else if((movementInput.x != 0 || movementInput.y != 0) && !hasMoved)
-        {
-            GetMovementDirection();
         }
     }
 
@@ -38,11 +35,11 @@ public class UnitMovementController : MonoBehaviour
     {
         Vector3Int destinationUnitTile = fogOfWar.WorldToCell(movementInput);
         Vector3Int currentUnitTile = fogOfWar.WorldToCell(transform.position);
-        print("dest: " + movementInput.ToString());
+        /*print("dest: " + movementInput.ToString());
         print("curr: " + transform.position.ToString());
         print("*******************************************");
         print("dest: " + destinationUnitTile.ToString());
-        print("curr: " + currentUnitTile.ToString());
+        print("curr: " + currentUnitTile.ToString());*/
         if (Physics2D.OverlapCircle(movementInput, 0.1f, colliders))
             Debug.Log("Collider blocked");
         else
@@ -53,10 +50,10 @@ public class UnitMovementController : MonoBehaviour
                     Debug.Log("Corner move outtta range");
                 else
                 {
+                    hasMoved = true;
                     endPosition = fogOfWar.CellToWorld(destinationUnitTile);
                     endPosition.x += xOffset;
                     endPosition.y += yOffset;
-                    hasMoved = true;
                 }
             }
             else
@@ -70,6 +67,10 @@ public class UnitMovementController : MonoBehaviour
     public void Move(Vector2 input)
     {
         movementInput = input;
+        if ((movementInput.x != 0 || movementInput.y != 0) && !hasMoved)
+        {
+            GetMovementDirection();
+        }
     }
 
 
@@ -86,7 +87,7 @@ public class UnitMovementController : MonoBehaviour
     public void ShowUnitRange(bool visible)
     {
         Vector3Int currentTile = rangeMap.WorldToCell(transform.position);
-        for (int x = -speed; x <= speed; x++)
+            for (int x = -speed; x <= speed; x++)
             for (int y = -speed; y <= speed; y++)
                 if (visible)
                 {
@@ -106,5 +107,10 @@ public class UnitMovementController : MonoBehaviour
     public void SetHasMoved(bool arg)
     {
         hasMoved = arg;
+    }
+
+    public void SetActivePlayer(bool arg)
+    {
+        activePlayer = arg;
     }
 }
