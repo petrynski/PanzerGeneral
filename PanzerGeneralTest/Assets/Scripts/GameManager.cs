@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
             unit.unitPhase = ActivityPhase.noOperation;
             unit.GetUMC().SetHasMoved(true);
             unit.GetUMC().SetActivePlayer(false);
-            unit.GetUMC().Move(new Vector2(0,0));
+            unit.GetUMC().Move(new Vector2(0,0), unit.speed);
         }
         foreach(var unit in nextActive)
         {

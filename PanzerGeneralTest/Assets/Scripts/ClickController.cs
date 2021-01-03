@@ -8,7 +8,7 @@ public class ClickController : MonoBehaviour
 
        void OnMouseUp()
     {
-        Collider2D collider = this.GetComponent<Collider2D>();
+        Collider2D collider = GetComponent<Collider2D>();
         selectedUnit = collider.GetComponent<Unit>();
 
         if (selectedUnit != null)
@@ -34,6 +34,19 @@ public class ClickController : MonoBehaviour
             {
                 if (selectedUnit.unitPhase == ActivityPhase.moveOrReplenish)
                     selectedUnit.Move((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                
+                if (selectedUnit.unitPhase == ActivityPhase.attack)
+                {
+                    Unit attackedUnit;
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
+                    if (hit.collider != null)
+                    {
+                        attackedUnit = hit.collider.GetComponent<Unit>();
+                        Debug.Log(selectedUnit.ToString() + " atakuje " + attackedUnit.ToString());
+                        selectedUnit.attack(attackedUnit);
+                    }
+                }
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -15,7 +16,6 @@ public class UnitMovementController : MonoBehaviour
     public LayerMask colliders;
     bool hasMoved;
     public int vision = 3;
-    public int speed = 2;
     public float xOffset = 0.0f;
     public float yOffset = 0.0f;
     private bool activePlayer = true;
@@ -31,7 +31,7 @@ public class UnitMovementController : MonoBehaviour
         }
     }
 
-    public void GetMovementDirection()
+    public void GetMovementDirection(int speed)
     {
         Vector3Int destinationUnitTile = fogOfWar.WorldToCell(movementInput);
         Vector3Int currentUnitTile = fogOfWar.WorldToCell(transform.position);
@@ -46,30 +46,25 @@ public class UnitMovementController : MonoBehaviour
         {
             if (Mathf.Abs(destinationUnitTile.x - currentUnitTile.x) <= speed && Mathf.Abs(destinationUnitTile.y - currentUnitTile.y) <= speed)
             {
-                if (Mathf.Abs(destinationUnitTile.x - currentUnitTile.x) == speed && Mathf.Abs(destinationUnitTile.y - currentUnitTile.y) == speed)
-                    Debug.Log("Corner move outtta range");
-                else
-                {
-                    hasMoved = true;
-                    endPosition = fogOfWar.CellToWorld(destinationUnitTile);
-                    endPosition.x += xOffset;
-                    endPosition.y += yOffset;
-                }
+                hasMoved = true;
+                endPosition = fogOfWar.CellToWorld(destinationUnitTile);
+                endPosition.x += xOffset;
+                endPosition.y += yOffset;
             }
             else
                 Debug.Log("Move outta range");
         }
         movementInput = new Vector2(0,0);
 
-        ShowUnitRange(false);
+        ShowUnitRange(false, ActivityPhase.moveOrReplenish, speed);
     }
 
-    public void Move(Vector2 input)
+    public void Move(Vector2 input, int speed)
     {
         movementInput = input;
         if ((movementInput.x != 0 || movementInput.y != 0) && !hasMoved)
         {
-            GetMovementDirection();
+            GetMovementDirection(speed);
         }
     }
 
@@ -84,19 +79,31 @@ public class UnitMovementController : MonoBehaviour
 
     }
 
-    public void ShowUnitRange(bool visible)
+    public void ShowUnitRange(bool visible, ActivityPhase ap, int range)
     {
         Vector3Int currentTile = rangeMap.WorldToCell(transform.position);
-            for (int x = -speed; x <= speed; x++)
-            for (int y = -speed; y <= speed; y++)
+        for (int x = -range; x <= range; x++)
+            for (int y = -range; y <= range; y++)
                 if (visible)
                 {
-                    if (Mathf.Abs(x) == speed && Mathf.Abs(y) == speed)
-                        continue;
-                    rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), highlightTile);
+                    if (ap == ActivityPhase.moveOrReplenish)
+                    {
+                        rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), highlightTile);
+                        rangeMap.color = Color.white;
+                    }
+                    else if(ap == ActivityPhase.attack)
+                    {
+                        rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), highlightTile);
+                        rangeMap.color = Color.red;
+                    }
                 }
                 else
                     rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), null);
+    }
+
+    internal bool IsAtPosition()
+    {
+        return transform.position == endPosition;
     }
 
     public bool GetHasMoved()

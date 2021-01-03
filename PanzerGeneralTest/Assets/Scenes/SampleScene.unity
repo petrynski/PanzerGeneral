@@ -1054,7 +1054,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   vision: 6
-  speed: 5
   xOffset: 0
   yOffset: 0
 --- !u!114 &154467807
@@ -1081,11 +1080,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74ec3a45e1569a4daa63e722bff7c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitType: 3
   unitPhase: 0
   currentHP: 10
   maxHP: 15
   attackRange: 0
   text: {fileID: 1264338308}
+  vision: 0
+  speed: 0
 --- !u!58 &154467809
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1230,7 +1232,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   vision: 5
-  speed: 3
   xOffset: 0
   yOffset: 0
 --- !u!114 &262175257
@@ -1257,11 +1258,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74ec3a45e1569a4daa63e722bff7c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitType: 0
   unitPhase: 0
   currentHP: 10
   maxHP: 10
   attackRange: 0
   text: {fileID: 1940829087}
+  vision: 0
+  speed: 0
 --- !u!58 &262175259
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1357,7 +1361,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 262175255}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.51, y: 8.16, z: 0}
+  m_LocalPosition: {x: 21.54, y: 5.93, z: 0}
   m_LocalScale: {x: 1, y: 1.2, z: 1}
   m_Children:
   - {fileID: 1577064090}
@@ -1406,7 +1410,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   vision: 2
-  speed: 2
   xOffset: 0
   yOffset: 0
 --- !u!114 &304698468
@@ -1433,11 +1436,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74ec3a45e1569a4daa63e722bff7c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitType: 1
   unitPhase: 0
   currentHP: 10
   maxHP: 10
   attackRange: 0
   text: {fileID: 1719593064}
+  vision: 0
+  speed: 0
 --- !u!58 &304698470
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -105342,7 +105348,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   vision: 9
-  speed: 7
   xOffset: 0
   yOffset: 0
 --- !u!114 &946610491
@@ -105369,11 +105374,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74ec3a45e1569a4daa63e722bff7c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitType: 3
   unitPhase: 0
   currentHP: 10
   maxHP: 10
   attackRange: 0
   text: {fileID: 780519444}
+  vision: 0
+  speed: 0
 --- !u!58 &946610493
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -107028,7 +107036,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   vision: 3
-  speed: 3
   xOffset: 0
   yOffset: 0
 --- !u!114 &1794694830
@@ -107055,11 +107062,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74ec3a45e1569a4daa63e722bff7c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitType: 1
   unitPhase: 0
   currentHP: 10
   maxHP: 10
   attackRange: 0
   text: {fileID: 2086693811}
+  vision: 0
+  speed: 0
 --- !u!58 &1794694832
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -107384,7 +107394,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   vision: 4
-  speed: 2
   xOffset: 0
   yOffset: 0
 --- !u!114 &1864132750
@@ -107411,11 +107420,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74ec3a45e1569a4daa63e722bff7c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitType: 2
   unitPhase: 0
   currentHP: 10
   maxHP: 10
   attackRange: 0
   text: {fileID: 1940659413}
+  vision: 0
+  speed: 0
 --- !u!58 &1864132752
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -118024,7 +118036,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   vision: 4
-  speed: 3
   xOffset: 0
   yOffset: 0
 --- !u!114 &2035970167
@@ -118039,11 +118050,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74ec3a45e1569a4daa63e722bff7c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitType: 0
   unitPhase: 0
   currentHP: 10
   maxHP: 10
   attackRange: 0
   text: {fileID: 306228694}
+  vision: 0
+  speed: 0
 --- !u!1 &2037667300
 GameObject:
   m_ObjectHideFlags: 0
@@ -118216,7 +118230,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   vision: 5
-  speed: 3
   xOffset: 0
   yOffset: 0
 --- !u!114 &2115953357
@@ -118243,11 +118256,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74ec3a45e1569a4daa63e722bff7c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitType: 2
   unitPhase: 0
   currentHP: 10
   maxHP: 10
   attackRange: 0
   text: {fileID: 394021363}
+  vision: 0
+  speed: 0
 --- !u!58 &2115953359
 CircleCollider2D:
   m_ObjectHideFlags: 0
