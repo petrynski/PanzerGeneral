@@ -44,7 +44,7 @@ public class ClickController : MonoBehaviour
                     {
                         attackedUnit = hit.collider.GetComponent<Unit>();
                         Debug.Log(selectedUnit.ToString() + " atakuje " + attackedUnit.ToString());
-                        selectedUnit.attack(attackedUnit);
+                        selectedUnit.Attack(attackedUnit,true);
                     }
                 }
             }

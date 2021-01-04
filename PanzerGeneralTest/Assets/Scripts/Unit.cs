@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
 
 public enum ActivityPhase : int
 {
@@ -32,6 +34,10 @@ public class Unit : MonoBehaviour
     public Text text; 
     public int vision;
     public int speed;
+    private float[,] attackEffectivity;
+    private static int[] rewardsTable = new int[4] {30, 210, 150, 90};
+    private static int[] costTable = new int[4] {50, 350, 250, 150};
+    public bool isGerman;
 
     private void Start()
     {
@@ -66,15 +72,46 @@ public class Unit : MonoBehaviour
         }
         currentHP = maxHP;
         text.text = ((int)maxHP).ToString();
+
+        attackEffectivity = new float[4, 4]
+        {
+            {0.2f, 0.1f, 0.6f, 0.2f}, {0.4f, 0.2f, 0.2f, 0.6f},
+            {0.1f, 0.6f, 0.2f, 0.4f}, {0.6f, 0.1f, 0.2f, 0.2f}
+        };
+
+        if (isGerman)
+        {
+            GameManager.germanUnits.Add(this);
+        }
+        else
+        {
+            GameManager.zsrrUnits.Add(this);
+        }
     }
 
-    internal void attack(Unit attackedUnit)
+    internal void Attack(Unit attackedUnit, bool attackedFirst)
     {
         if (Mathf.Abs(attackedUnit.transform.position.x - transform.position.x) <= attackRange &&
             Mathf.Abs(attackedUnit.transform.position.y - transform.position.y) <= attackRange)
         {
-            attackedUnit.currentHP--;
-            attackedUnit.text.text = attackedUnit.currentHP.ToString();
+            attackedUnit.currentHP -= this.currentHP * attackEffectivity[(int)this.unitType, (int)attackedUnit.unitType];
+            if (attackedUnit.currentHP <= 0)
+            {
+                if (isGerman)
+                {
+                    GameManager.cashP1 += rewardsTable[(int)attackedUnit.unitType];
+                }
+                else
+                {
+                    GameManager.cashP2 += rewardsTable[(int)attackedUnit.unitType];
+                }
+                attackedUnit.Die();
+            }
+            else if (attackedFirst)
+            {
+                attackedUnit.Attack(this,false);
+            }
+            attackedUnit.text.text = Math.Round(attackedUnit.currentHP,1).ToString();
             unitPhase = ActivityPhase.noOperation;
             umc.ShowUnitRange(false, unitPhase, vision);
         }
@@ -113,5 +150,35 @@ public class Unit : MonoBehaviour
     public UnitMovementController GetUMC()
     {
         return umc;
+    }
+
+    private void Die()
+    {
+        if (isGerman)
+        {
+            GameManager.germanUnits.Remove(this);
+        }
+        else
+        {
+            GameManager.zsrrUnits.Remove(this);
+        }
+        Destroy(this.gameObject);
+    }
+
+    public static int GetCost(UnitType unitType)
+    {
+        return costTable[(int) unitType];
+    }
+
+    public static Sprite GetSprite(UnitType unitType)
+    {
+        switch ((int)unitType)
+        {   
+            default:
+            case 0: return Resources.Load<Sprite>("Sprites/NiemieckaPiech");
+            case 1: return Resources.Load<Sprite>("Sprites/NiemieckiCzolg");
+            case 2: return Resources.Load<Sprite>("Sprites/NiemieckiPczolg");
+            case 3: return Resources.Load<Sprite>("Sprites/NiemieckaPpiech");
+        }    
     }
 }

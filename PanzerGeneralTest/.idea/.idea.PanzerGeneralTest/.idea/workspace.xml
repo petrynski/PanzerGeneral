@@ -10,13 +10,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Town.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/Player.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/ClickController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Unit.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UnitMovementController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/ClickController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI_Shop.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Town.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Unit.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1mVsrwoK2P7RNlf47PkcFyJ9iSb" />
@@ -61,6 +66,7 @@
       <option name="presentableId" value="Default" />
       <updated>1609590298417</updated>
       <workItem from="1609590308866" duration="14233000" />
+      <workItem from="1609764611894" duration="11943000" />
     </task>
     <servers />
   </component>
@@ -79,6 +85,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
