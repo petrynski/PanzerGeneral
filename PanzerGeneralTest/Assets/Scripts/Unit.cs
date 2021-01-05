@@ -41,7 +41,13 @@ public class Unit : MonoBehaviour
 
     private void Start()
     {
-        switch(unitType){
+        SetUp();
+    }
+
+    public void SetUp()
+    {
+        switch (unitType)
+        {
             case UnitType.infantry:
                 maxHP = 10f;
                 attackRange = 1;
@@ -82,10 +88,12 @@ public class Unit : MonoBehaviour
         if (isGerman)
         {
             GameManager.germanUnits.Add(this);
+            text.color = Color.blue;
         }
         else
         {
             GameManager.zsrrUnits.Add(this);
+            text.color = Color.red;
         }
     }
 
@@ -170,15 +178,26 @@ public class Unit : MonoBehaviour
         return costTable[(int) unitType];
     }
 
-    public static Sprite GetSprite(UnitType unitType)
+    public static Sprite GetSprite(UnitType unitType, bool isGerman)
     {
-        switch ((int)unitType)
-        {   
-            default:
-            case 0: return Resources.Load<Sprite>("Sprites/NiemieckaPiech");
-            case 1: return Resources.Load<Sprite>("Sprites/NiemieckiCzolg");
-            case 2: return Resources.Load<Sprite>("Sprites/NiemieckiPczolg");
-            case 3: return Resources.Load<Sprite>("Sprites/NiemieckaPpiech");
-        }    
+        if (isGerman)
+            switch ((int)unitType)
+            {   
+                default:
+                case 0: return Resources.Load<Sprite>("Sprites/NiemieckaPiech");
+                case 1: return Resources.Load<Sprite>("Sprites/NiemieckiCzolg");
+                case 2: return Resources.Load<Sprite>("Sprites/NiemieckiPczolg");
+                case 3: return Resources.Load<Sprite>("Sprites/NiemieckaPpiech");
+            }    
+        else
+            switch ((int)unitType)
+            {
+                default:
+                case 0: return Resources.Load<Sprite>("Sprites/RuskiPiech");
+                case 1: return Resources.Load<Sprite>("Sprites/RuskiCzolg");
+                case 2: return Resources.Load<Sprite>("Sprites/RuskiPczolg");
+                case 3: return Resources.Load<Sprite>("Sprites/RuskaPpiech");
+            }
     }
+
 }

@@ -43,8 +43,23 @@ public class ClickController : MonoBehaviour
                     if (hit.collider != null)
                     {
                         attackedUnit = hit.collider.GetComponent<Unit>();
-                        Debug.Log(selectedUnit.ToString() + " atakuje " + attackedUnit.ToString());
-                        selectedUnit.Attack(attackedUnit,true);
+                        if (attackedUnit != null)
+                        { 
+                            Debug.Log(selectedUnit.ToString() + " atakuje " + attackedUnit.ToString());
+                            selectedUnit.Attack(attackedUnit, true);
+                        }
+                        //TODO przepiąć do UMC w fazie ruchu + logika przejęcia
+                        else
+                        {
+                            Town capturedTown = hit.collider.GetComponent<Town>();
+                            if (capturedTown != null)
+                            {
+                                if(selectedUnit.isGerman)
+                                    Debug.Log(capturedTown.ToString() + " zostało podbite przez Nazistów");
+                                else
+                                    Debug.Log(capturedTown.ToString() + " zostało podbite przez ZSRR");
+                            }
+                        }
                     }
                 }
             }

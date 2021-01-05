@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
         }
         if (Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBorderThickness)
         {
-            if (pos.x < 31)
+            if (pos.x < 40)
                 pos.x += panSpeed * Time.deltaTime * zoomFactor;
         }
         if (Input.GetAxis("Mouse ScrollWheel") > 0)

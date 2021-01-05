@@ -8,13 +8,20 @@ public class UI_Shop : MonoBehaviour
 {
     private Transform container;
     private Transform shopItemTemplate;
+    private Transform[] items = new Transform[4];
+    private Town selectedTown;
+    public Text title;
+    private bool isActivePlayerGerman = true;
+    public UnitFactory unitFactory;
+
 
     private void Start()
     {
-        CreateItemButton(Unit.GetSprite(UnitType.infantry),"Piechota", Unit.GetCost(UnitType.infantry), 0);
-        CreateItemButton(Unit.GetSprite(UnitType.tank),"Czołg", Unit.GetCost(UnitType.tank), 1);
-        CreateItemButton(Unit.GetSprite(UnitType.antiTank),"Anty Czoug", Unit.GetCost(UnitType.antiTank), 2);
-        CreateItemButton(Unit.GetSprite(UnitType.armoredCar),"Anty Piechota", Unit.GetCost(UnitType.armoredCar), 3);
+        items[0] = CreateItemButton("Piechota", Unit.GetCost(UnitType.infantry), 0, UnitType.infantry);
+        items[1] = CreateItemButton("Czołg", Unit.GetCost(UnitType.tank), 1, UnitType.tank);
+        items[2] = CreateItemButton("Anty Czoug", Unit.GetCost(UnitType.antiTank), 2, UnitType.antiTank);
+        items[3] = CreateItemButton("Anty Piechota", Unit.GetCost(UnitType.armoredCar), 3, UnitType.armoredCar);
+        
         SetVisible(false);
     }
 
@@ -30,7 +37,24 @@ public class UI_Shop : MonoBehaviour
         gameObject.SetActive(visible);
     }
 
-    private void CreateItemButton(Sprite itemSprite, string itemName, int itemCost, int positionIndex)
+    public void SetSelectedTown(Town town)
+    {
+        title.text = town.nameText.text;
+        selectedTown = town;
+    }
+
+    public void ChangeNation(bool isGerman)
+    {
+        isActivePlayerGerman = isGerman;
+        UnitType i = 0;
+        foreach (var item in items)
+        {
+            item.Find("Image").GetComponent<Image>().sprite = Unit.GetSprite(i, isGerman);
+            i++;
+        }
+    }
+
+    private Transform CreateItemButton(string itemName, int itemCost, int positionIndex, UnitType unitType)
     {
         Transform shopItemTransform = Instantiate(shopItemTemplate, container);
         shopItemTransform.gameObject.SetActive(true);
@@ -41,7 +65,39 @@ public class UI_Shop : MonoBehaviour
 
         shopItemTransform.Find("Unit").GetComponent<Text>().text = itemName;
         shopItemTransform.Find("UnitCost").GetComponent<Text>().text = itemCost.ToString();
+        shopItemTransform.Find("Image").GetComponent<Image>().sprite = Unit.GetSprite(unitType, true);
+        shopItemTransform.GetComponent<Button>().onClick.AddListener(
+            () => { tryBuyUnit(unitType); }
+        );
 
-        shopItemTransform.Find("Image").GetComponent<Image>().sprite = itemSprite;
+        return shopItemTransform;
+    }
+
+    public void tryBuyUnit(UnitType unitType)
+    {
+        if (isActivePlayerGerman)
+        {
+            if (GameManager.cashP1 < Unit.GetCost(unitType))
+                Debug.Log("Jesteś biedny");
+            else
+            {
+                GameManager.cashP1 -= Unit.GetCost(unitType);
+                Debug.Log("Skont masz piniążki?");
+                unitFactory.generateUnit(unitType, isActivePlayerGerman, selectedTown.transform.position);
+                SetVisible(false);
+            }
+        }
+        else
+        {
+            if (GameManager.cashP2 < Unit.GetCost(unitType))
+                Debug.Log("Jesteś biedny");
+            else
+            {
+                GameManager.cashP2 -= Unit.GetCost(unitType);
+                unitFactory.generateUnit(unitType, isActivePlayerGerman, selectedTown.transform.position);
+                Debug.Log("Skont masz piniążki?");
+                SetVisible(false);
+            }
+        }
     }
 }
