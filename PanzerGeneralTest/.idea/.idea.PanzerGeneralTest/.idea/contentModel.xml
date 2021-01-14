@@ -13,6 +13,7 @@
           <e p="Town.cs" t="Include" />
           <e p="UI_Shop.cs" t="Include" />
           <e p="Unit.cs" t="Include" />
+          <e p="UnitFactory.cs" t="Include" />
           <e p="UnitMovementController.cs" t="Include" />
         </e>
       </e>

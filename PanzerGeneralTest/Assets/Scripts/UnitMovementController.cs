@@ -7,14 +7,14 @@ using UnityEngine.Tilemaps;
 public class UnitMovementController : MonoBehaviour
 {
     private Vector2 movementInput;
-    Vector3 endPosition;
+    private Vector3 endPosition;
     [SerializeField]
     public Tilemap fogOfWar;
     public Tilemap rangeMap;
     [SerializeField]
     public TileBase highlightTile;
     public LayerMask colliders;
-    bool hasMoved;
+    private bool hasMoved;
     public int vision = 3;
     public float xOffset = 0.0f;
     public float yOffset = 0.0f;

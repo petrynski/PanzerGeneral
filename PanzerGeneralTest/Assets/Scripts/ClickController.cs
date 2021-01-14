@@ -54,10 +54,16 @@ public class ClickController : MonoBehaviour
                             Town capturedTown = hit.collider.GetComponent<Town>();
                             if (capturedTown != null)
                             {
-                                if(selectedUnit.isGerman)
+                                if (selectedUnit.isGerman && !capturedTown.isGerman)
+                                {
                                     Debug.Log(capturedTown.ToString() + " zostało podbite przez Nazistów");
-                                else
-                                    Debug.Log(capturedTown.ToString() + " zostało podbite przez ZSRR");
+                                    capturedTown.CaptureTown();
+                                }
+                                else if (!selectedUnit.isGerman && capturedTown.isGerman)
+                                {
+                                    Debug.Log(capturedTown.ToString() + " zostało podbite przez ZSRR");  
+                                    capturedTown.CaptureTown();
+                                }
                             }
                         }
                     }
