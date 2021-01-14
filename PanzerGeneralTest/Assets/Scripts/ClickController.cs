@@ -48,7 +48,7 @@ public class ClickController : MonoBehaviour
                             Debug.Log(selectedUnit.ToString() + " atakuje " + attackedUnit.ToString());
                             selectedUnit.Attack(attackedUnit, true);
                         }
-                        //TODO przepiąć do UMC w fazie ruchu + logika przejęcia
+                        //TODO przepiąć do UMC w fazie ruchu
                         else
                         {
                             Town capturedTown = hit.collider.GetComponent<Town>();

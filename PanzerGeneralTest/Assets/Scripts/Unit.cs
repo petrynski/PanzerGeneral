@@ -51,7 +51,7 @@ public class Unit : MonoBehaviour
             case UnitType.infantry:
                 maxHP = 10f;
                 attackRange = 1;
-                vision = 4;
+                vision = 2;
                 speed = 2;
                 break;
 
@@ -65,14 +65,14 @@ public class Unit : MonoBehaviour
             case UnitType.antiTank:
                 maxHP = 10f;
                 attackRange = 2;
-                vision = 4;
+                vision = 3;
                 speed = 1;
                 break;
 
             case UnitType.armoredCar:
                 maxHP = 10f;
                 attackRange = 1;
-                vision = 4;
+                vision = 3;
                 speed = 3;
                 break;
         }
