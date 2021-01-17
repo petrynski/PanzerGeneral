@@ -6,11 +6,16 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
 {
     bool isPlayerOneTurn;
+    private bool isShowing = false;
+    public Canvas popUp;
+    public Canvas germanWins;
+    public Canvas ZsrrWins;
     public Text playerText;
     public Text cashText;
     public Tilemap fogP1, fogP2;
@@ -39,15 +44,23 @@ public class GameManager : MonoBehaviour
     }
 
     private void Update()
-    {
+    {   
         if (isPlayerOneTurn)
         {
-            cashText.text = "Piniążki: " + cashP1.ToString();
+            cashText.text = "Money: " + cashP1.ToString();
         }
         else
         {
-            cashText.text = "Piniążki: " + cashP2.ToString();
+            cashText.text = "Money: " + cashP2.ToString();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ExitPopUp();
+        }
+        if(germanTowns.Count == 0)
+            ZsrrWins.gameObject.SetActive(true);
+        if(zsrrTowns.Count == 0)
+            germanWins.gameObject.SetActive(true);
     }
 
     private static void SwitchPlayer(List<Unit> currentlyActive, List<Unit> nextActive, List<Town> currActTowns, List<Town> nextActTowns)
@@ -100,4 +113,16 @@ public class GameManager : MonoBehaviour
         uiShop.ChangeNation(isPlayerOneTurn);
         uiShop.SetVisible(false);
     }
+    
+    public void QuitToMenu()
+    {
+        SceneManager.LoadScene("Scenes/MainMenu");
+    }
+
+    public void ExitPopUp()
+    {
+        isShowing = !isShowing;
+        popUp.gameObject.SetActive(isShowing);
+    }
+    
 }

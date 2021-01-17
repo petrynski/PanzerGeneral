@@ -6,7 +6,7 @@ public class ClickController : MonoBehaviour
 {
     private Unit selectedUnit = null;
 
-       void OnMouseUp()
+    void OnMouseUp()
     {
         Collider2D collider = GetComponent<Collider2D>();
         selectedUnit = collider.GetComponent<Unit>();

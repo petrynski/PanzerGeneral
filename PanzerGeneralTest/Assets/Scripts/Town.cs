@@ -53,16 +53,12 @@ public class Town : MonoBehaviour
             GameManager.zsrrTowns.Add(this);
             GameManager.germanTowns.Remove(this);
             nameText.color = GameManager.zsrrTowns[0].nameText.color;
-            if(GameManager.germanTowns.Count == 0)
-                Debug.Log("koniec gry wygrało ZSRR");
         }
         else
         {
             GameManager.germanTowns.Add(this);
             GameManager.zsrrTowns.Remove(this);
             nameText.color = GameManager.germanTowns[0].nameText.color;
-            if(GameManager.germanTowns.Count == 0)
-                Debug.Log("koniec gry wygrali Naziści");
         }
         isGerman = !isGerman;
         activePlayer = true;
