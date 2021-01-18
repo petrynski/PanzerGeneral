@@ -276,15 +276,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentImage: {fileID: 823049443}
   slides:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 8f0dd4d7b191bdb4eac4447822ad6bcc, type: 3}
+  - {fileID: 21300000, guid: f239e2c24471dcf4a9ae8870e13669ad, type: 3}
+  - {fileID: 21300000, guid: f767eed3868f3c245bd139f3782c8347, type: 3}
+  - {fileID: 21300000, guid: d5bc157ebae2dae4bbe92af60e87549b, type: 3}
+  - {fileID: 21300000, guid: b46fc2498ad7f3247b7848d1e7fa9a84, type: 3}
+  - {fileID: 21300000, guid: 6fb4287594c5bd748aa23e1e22aaada9, type: 3}
+  - {fileID: 21300000, guid: 81f22922209b4364fa6a3c06b57cb1bc, type: 3}
+  - {fileID: 21300000, guid: 7e9e839aba87f7e4198746e3525d4de4, type: 3}
+  - {fileID: 21300000, guid: 5ddf9dd4b6306fe4b93400699c8eba67, type: 3}
+  - {fileID: 21300000, guid: 83661454fb8567848ac97e14bc10820b, type: 3}
+  - {fileID: 21300000, guid: 6bcb47ba55d75234083b532d716baa7c, type: 3}
 --- !u!1 &1165853253
 GameObject:
   m_ObjectHideFlags: 0

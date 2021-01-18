@@ -99,7 +99,7 @@ public class Unit : MonoBehaviour
 
     internal void Attack(Unit attackedUnit, bool attackedFirst)
     {
-        if (umc.IsInRange(attackRange, attackedUnit.transform.position))
+        if (umc.IsInRange(attackRange, attackedUnit.transform.position) && attackedUnit != this)
         {
             attackedUnit.currentHP -= this.currentHP * attackEffectivity[(int)this.unitType, (int)attackedUnit.unitType];
             if (attackedUnit.currentHP <= 0)

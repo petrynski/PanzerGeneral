@@ -147,7 +147,7 @@ public class UnitMovementController : MonoBehaviour
             int y = destinationTile.y - currentUnitTile.y;
             if (Math.Abs(y) <= range)
             {
-                if (y % 2 == 0)
+                if (currentUnitTile.y % 2 == 0)
                 {
                     if (x >= -range + (Math.Abs(y) / 2) && x <= range - ((Math.Abs(y) + 1) / 2))
                     {
@@ -155,7 +155,7 @@ public class UnitMovementController : MonoBehaviour
                     }
                 }
                 else
-                {
+                {   
                     if (x >= -range + ((Math.Abs(y) + 1) / 2) && x <= range - (Math.Abs(y) / 2))
                     {
                         return true;

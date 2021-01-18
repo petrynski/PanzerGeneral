@@ -12,6 +12,7 @@
           <e p="GameManager.cs" t="Include" />
           <e p="PlayButton.cs" t="Include" />
           <e p="Town.cs" t="Include" />
+          <e p="Tutorial.cs" t="Include" />
           <e p="UI_Shop.cs" t="Include" />
           <e p="Unit.cs" t="Include" />
           <e p="UnitFactory.cs" t="Include" />
