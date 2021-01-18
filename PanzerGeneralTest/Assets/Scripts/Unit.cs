@@ -99,8 +99,7 @@ public class Unit : MonoBehaviour
 
     internal void Attack(Unit attackedUnit, bool attackedFirst)
     {
-        if (Mathf.Abs(attackedUnit.transform.position.x - transform.position.x) <= attackRange &&
-            Mathf.Abs(attackedUnit.transform.position.y - transform.position.y) <= attackRange)
+        if (umc.IsInRange(attackRange, attackedUnit.transform.position))
         {
             attackedUnit.currentHP -= this.currentHP * attackEffectivity[(int)this.unitType, (int)attackedUnit.unitType];
             if (attackedUnit.currentHP <= 0)
@@ -123,8 +122,6 @@ public class Unit : MonoBehaviour
             unitPhase = ActivityPhase.noOperation;
             umc.ShowUnitRange(false, unitPhase, vision);
         }
-        else
-            Debug.Log("Outta range");
     }
 
     private void Awake()

@@ -35,24 +35,19 @@ public class UnitMovementController : MonoBehaviour
     {
         Vector3Int destinationUnitTile = fogOfWar.WorldToCell(movementInput);
         Vector3Int currentUnitTile = fogOfWar.WorldToCell(transform.position);
-        /*print("dest: " + movementInput.ToString());
-        print("curr: " + transform.position.ToString());
-        print("*******************************************");
-        print("dest: " + destinationUnitTile.ToString());
-        print("curr: " + currentUnitTile.ToString());*/
         if (Physics2D.OverlapCircle(movementInput, 0.1f, colliders))
             Debug.Log("Collider blocked");
         else
         {
-            if (Mathf.Abs(destinationUnitTile.x - currentUnitTile.x) <= speed && Mathf.Abs(destinationUnitTile.y - currentUnitTile.y) <= speed)
+            
+            if (IsInRange(speed, movementInput))
             {
                 hasMoved = true;
                 endPosition = fogOfWar.CellToWorld(destinationUnitTile);
                 endPosition.x += xOffset;
                 endPosition.y += yOffset;
             }
-            else
-                Debug.Log("Move outta range");
+            
         }
         movementInput = new Vector2(0,0);
 
@@ -82,23 +77,42 @@ public class UnitMovementController : MonoBehaviour
     public void ShowUnitRange(bool visible, ActivityPhase ap, int range)
     {
         Vector3Int currentTile = rangeMap.WorldToCell(transform.position);
-        for (int x = -range; x <= range; x++)
+        if (currentTile.y % 2 == 0)
             for (int y = -range; y <= range; y++)
-                if (visible)
-                {
-                    if (ap == ActivityPhase.moveOrReplenish)
+                for (int x = -range + (Math.Abs(y)/2); x <= range-((Math.Abs(y)+1)/2); x++)
+                    if (visible)
                     {
-                        rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), highlightTile);
-                        rangeMap.color = Color.white;
+                        if (ap == ActivityPhase.moveOrReplenish)
+                        {
+                            rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), highlightTile);
+                            rangeMap.color = Color.white;
+                        }
+                        else if(ap == ActivityPhase.attack)
+                        {
+                            rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), highlightTile);
+                            rangeMap.color = Color.red;
+                        }
                     }
-                    else if(ap == ActivityPhase.attack)
+                    else
+                        rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), null);
+        else
+            for (int y = -range; y <= range; y++)
+                for (int x = -range + ((Math.Abs(y) + 1) / 2); x <= range - (Math.Abs(y) / 2); x++)
+                    if (visible)
                     {
-                        rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), highlightTile);
-                        rangeMap.color = Color.red;
+                        if (ap == ActivityPhase.moveOrReplenish)
+                        {
+                            rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), highlightTile);
+                            rangeMap.color = Color.white;
+                        }
+                        else if (ap == ActivityPhase.attack)
+                        {
+                            rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), highlightTile);
+                            rangeMap.color = Color.red;
+                        }
                     }
-                }
-                else
-                    rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), null);
+                    else
+                        rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), null);
     }
 
     internal bool IsAtPosition()
@@ -119,5 +133,38 @@ public class UnitMovementController : MonoBehaviour
     public void SetActivePlayer(bool arg)
     {
         activePlayer = arg;
+    }
+
+    public bool IsInRange(int range, Vector3 destination)
+    {
+        Vector3Int destinationTile = fogOfWar.WorldToCell(destination);
+        Vector3Int currentUnitTile = fogOfWar.WorldToCell(transform.position);
+        if (Physics2D.OverlapCircle(movementInput, 0.1f, colliders))
+            Debug.Log("Collider blocked");
+        else
+        {
+            int x = destinationTile.x - currentUnitTile.x;
+            int y = destinationTile.y - currentUnitTile.y;
+            if (Math.Abs(y) <= range)
+            {
+                if (y % 2 == 0)
+                {
+                    if (x >= -range + (Math.Abs(y) / 2) && x <= range - ((Math.Abs(y) + 1) / 2))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (x >= -range + ((Math.Abs(y) + 1) / 2) && x <= range - (Math.Abs(y) / 2))
+                    {
+                        return true;
+                    }
+                }
+
+            }
+
+        }
+        return false;
     }
 }
