@@ -1241,9 +1241,9 @@ MonoBehaviour:
   currentHP: 10
   maxHP: 15
   attackRange: 0
-  text: {fileID: 1264338308}
   vision: 0
   speed: 0
+  text: {fileID: 1264338308}
   isGerman: 1
 --- !u!58 &154467809
 CircleCollider2D:
@@ -1501,9 +1501,9 @@ MonoBehaviour:
   currentHP: 10
   maxHP: 10
   attackRange: 0
-  text: {fileID: 1940829087}
   vision: 0
   speed: 0
+  text: {fileID: 1940829087}
   isGerman: 0
 --- !u!58 &262175259
 CircleCollider2D:
@@ -1680,9 +1680,9 @@ MonoBehaviour:
   currentHP: 10
   maxHP: 10
   attackRange: 0
-  text: {fileID: 1719593064}
   vision: 0
   speed: 0
+  text: {fileID: 1719593064}
   isGerman: 1
 --- !u!58 &304698470
 CircleCollider2D:
@@ -3662,9 +3662,9 @@ MonoBehaviour:
   currentHP: 10
   maxHP: 10
   attackRange: 0
-  text: {fileID: 1627868966}
   vision: 0
   speed: 0
+  text: {fileID: 1627868966}
   isGerman: 1
 --- !u!58 &508994948
 CircleCollider2D:
@@ -3761,7 +3761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508994944}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.12, y: -3.97, z: 0}
+  m_LocalPosition: {x: -8.91, y: -3.899, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 930449875}
@@ -3957,7 +3957,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 204.18, y: 117.3}
+  m_AnchoredPosition: {x: 204.162, y: 117.3}
   m_SizeDelta: {x: 452, y: 254}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &520186761
@@ -106771,7 +106771,6 @@ MonoBehaviour:
   uiShop: {fileID: 1372050756}
   nameText: {fileID: 2077290408}
   isGerman: 0
-  activePlayer: 0
 --- !u!58 &822974645
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -107097,9 +107096,9 @@ MonoBehaviour:
   currentHP: 10
   maxHP: 10
   attackRange: 0
-  text: {fileID: 1987919832}
   vision: 0
   speed: 0
+  text: {fileID: 1987919832}
   isGerman: 0
 --- !u!58 &888906156
 CircleCollider2D:
@@ -107196,7 +107195,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 888906152}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.99, y: -4.01, z: 0}
+  m_LocalPosition: {x: -8.89, y: -2.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 256653124}
@@ -107357,9 +107356,9 @@ MonoBehaviour:
   currentHP: 10
   maxHP: 10
   attackRange: 0
-  text: {fileID: 780519444}
   vision: 0
   speed: 0
+  text: {fileID: 780519444}
   isGerman: 0
 --- !u!58 &946610493
 CircleCollider2D:
@@ -107614,7 +107613,6 @@ MonoBehaviour:
   uiShop: {fileID: 1372050756}
   nameText: {fileID: 862184663}
   isGerman: 0
-  activePlayer: 0
 --- !u!58 &998775944
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -108027,7 +108025,6 @@ MonoBehaviour:
   uiShop: {fileID: 1372050756}
   nameText: {fileID: 24701861}
   isGerman: 1
-  activePlayer: 1
 --- !u!212 &1085198106
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -109587,7 +109584,6 @@ MonoBehaviour:
   uiShop: {fileID: 1372050756}
   nameText: {fileID: 0}
   isGerman: 1
-  activePlayer: 0
 --- !u!1 &1552907674
 GameObject:
   m_ObjectHideFlags: 0
@@ -110150,9 +110146,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -211.95467, y: -120.02}
+  m_AnchoredPosition: {x: -202.43, y: -117.77}
   m_SizeDelta: {x: 31.068436, y: 29.998856}
-  m_Pivot: {x: 0.49999332, y: 0.74747384}
+  m_Pivot: {x: 6.2444854, y: 0.50001746}
 --- !u!1 &1684277324
 GameObject:
   m_ObjectHideFlags: 0
@@ -110642,9 +110638,9 @@ MonoBehaviour:
   currentHP: 10
   maxHP: 10
   attackRange: 0
-  text: {fileID: 2086693811}
   vision: 0
   speed: 0
+  text: {fileID: 2086693811}
   isGerman: 0
 --- !u!58 &1794694832
 CircleCollider2D:
@@ -111177,9 +111173,9 @@ MonoBehaviour:
   currentHP: 10
   maxHP: 10
   attackRange: 0
-  text: {fileID: 1940659413}
   vision: 0
   speed: 0
+  text: {fileID: 1940659413}
   isGerman: 1
 --- !u!58 &1864132752
 CircleCollider2D:
@@ -122094,7 +122090,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035970160}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.02, y: 5.14, z: 0}
+  m_LocalPosition: {x: 18.87, y: 4.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1686864550}
@@ -122168,9 +122164,9 @@ MonoBehaviour:
   currentHP: 10
   maxHP: 10
   attackRange: 0
-  text: {fileID: 306228694}
   vision: 0
   speed: 0
+  text: {fileID: 306228694}
   isGerman: 1
 --- !u!1 &2037667300
 GameObject:
@@ -122722,7 +122718,6 @@ MonoBehaviour:
   uiShop: {fileID: 1372050756}
   nameText: {fileID: 1625282923}
   isGerman: 1
-  activePlayer: 1
 --- !u!58 &2109975900
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -122811,9 +122806,9 @@ MonoBehaviour:
   currentHP: 10
   maxHP: 10
   attackRange: 0
-  text: {fileID: 394021363}
   vision: 0
   speed: 0
+  text: {fileID: 394021363}
   isGerman: 0
 --- !u!58 &2115953359
 CircleCollider2D:

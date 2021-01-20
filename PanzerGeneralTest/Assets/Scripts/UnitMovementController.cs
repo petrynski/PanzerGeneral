@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+// Klasa odpowiedzialna jest za współdziałanie instancji jednostki oraz siatki (zarówno mgły jak i mapy terenu). 
+// Tutaj wykonuje się odsłanianie odkrytej mapy przez jednostkę oraz wizualne i logiczne przesuwanie jednostki po mapie.
 public class UnitMovementController : MonoBehaviour
 {
     private Vector2 movementInput;
@@ -18,28 +18,24 @@ public class UnitMovementController : MonoBehaviour
     public int vision = 3;
     public float xOffset = 0.0f;
     public float yOffset = 0.0f;
-    private bool activePlayer = true;
 
-    // Update is called once per frame
     void Update()
     {
         UpdateFogOfWar();
-        if (movementInput.x == 0 && movementInput.y == 0 && activePlayer)
-        {
+        if (movementInput.x == 0 && movementInput.y == 0)
             if (hasMoved == true && transform.position != endPosition)
                 transform.position = Vector3.MoveTowards(transform.position, endPosition, 0.02f);
-        }
+    }
+
+    private void Start()
+    {
+        endPosition = transform.position;
     }
 
     public void GetMovementDirection(int speed)
     {
         Vector3Int destinationUnitTile = fogOfWar.WorldToCell(movementInput);
-        Vector3Int currentUnitTile = fogOfWar.WorldToCell(transform.position);
-        if (Physics2D.OverlapCircle(movementInput, 0.1f, colliders))
-            Debug.Log("Collider blocked");
-        else
-        {
-            
+        if (!Physics2D.OverlapCircle(movementInput, 0.1f, colliders))
             if (IsInRange(speed, movementInput))
             {
                 hasMoved = true;
@@ -47,10 +43,8 @@ public class UnitMovementController : MonoBehaviour
                 endPosition.x += xOffset;
                 endPosition.y += yOffset;
             }
-            
-        }
+     
         movementInput = new Vector2(0,0);
-
         ShowUnitRange(false, ActivityPhase.moveOrReplenish, speed);
     }
 
@@ -58,20 +52,21 @@ public class UnitMovementController : MonoBehaviour
     {
         movementInput = input;
         if ((movementInput.x != 0 || movementInput.y != 0) && !hasMoved)
-        {
             GetMovementDirection(speed);
-        }
     }
-
 
     void UpdateFogOfWar()
     {
-        Vector3Int currentUnitTile = fogOfWar.WorldToCell(transform.position);
+        Vector3Int currentUnitTile = fogOfWar.WorldToCell(transform.position); 
 
-        for (int x = -vision; x <= vision; x++)
+        if (currentUnitTile.y % 2 == 0)
             for (int y = -vision; y <= vision; y++)
-                fogOfWar.SetTile(currentUnitTile + new Vector3Int(x, y, 0), null);
-
+                for (int x = -vision + (Math.Abs(y) / 2); x <= vision - ((Math.Abs(y) + 1) / 2); x++)
+                    fogOfWar.SetTile(currentUnitTile + new Vector3Int(x, y, 0), null);
+        else
+            for (int y = -vision; y <= vision; y++)
+                for (int x = -vision + ((Math.Abs(y) + 1) / 2); x <= vision - (Math.Abs(y) / 2); x++)
+                            fogOfWar.SetTile(currentUnitTile + new Vector3Int(x, y, 0), null);
     }
 
     public void ShowUnitRange(bool visible, ActivityPhase ap, int range)
@@ -130,18 +125,11 @@ public class UnitMovementController : MonoBehaviour
         hasMoved = arg;
     }
 
-    public void SetActivePlayer(bool arg)
-    {
-        activePlayer = arg;
-    }
-
     public bool IsInRange(int range, Vector3 destination)
     {
         Vector3Int destinationTile = fogOfWar.WorldToCell(destination);
         Vector3Int currentUnitTile = fogOfWar.WorldToCell(transform.position);
-        if (Physics2D.OverlapCircle(movementInput, 0.1f, colliders))
-            Debug.Log("Collider blocked");
-        else
+        if (!Physics2D.OverlapCircle(movementInput, 0.1f, colliders))
         {
             int x = destinationTile.x - currentUnitTile.x;
             int y = destinationTile.y - currentUnitTile.y;
@@ -150,20 +138,14 @@ public class UnitMovementController : MonoBehaviour
                 if (currentUnitTile.y % 2 == 0)
                 {
                     if (x >= -range + (Math.Abs(y) / 2) && x <= range - ((Math.Abs(y) + 1) / 2))
-                    {
                         return true;
-                    }
                 }
                 else
                 {   
                     if (x >= -range + ((Math.Abs(y) + 1) / 2) && x <= range - (Math.Abs(y) / 2))
-                    {
                         return true;
-                    }
                 }
-
             }
-
         }
         return false;
     }

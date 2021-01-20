@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
+// Klasa odpowiedzialna za logikę działania tutorialu w menu gry.
 public class Tutorial : MonoBehaviour
 {
     public Image currentImage;

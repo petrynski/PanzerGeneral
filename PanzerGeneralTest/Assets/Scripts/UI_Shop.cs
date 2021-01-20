@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_Shop : MonoBehaviour
@@ -11,7 +8,6 @@ public class UI_Shop : MonoBehaviour
     private Transform[] items = new Transform[4];
     private Town selectedTown;
     public Text title;
-    private bool isActivePlayerGerman = true;
     public UnitFactory unitFactory;
 
 
@@ -45,13 +41,9 @@ public class UI_Shop : MonoBehaviour
 
     public void ChangeNation(bool isGerman)
     {
-        isActivePlayerGerman = isGerman;
         UnitType i = 0;
         foreach (var item in items)
-        {
-            item.Find("Image").GetComponent<Image>().sprite = Unit.GetSprite(i, isGerman);
-            i++;
-        }
+            item.Find("Image").GetComponent<Image>().sprite = Unit.GetSprite(i++, isGerman);
     }
 
     private Transform CreateItemButton(string itemName, int itemCost, int positionIndex, UnitType unitType)
@@ -67,37 +59,30 @@ public class UI_Shop : MonoBehaviour
         shopItemTransform.Find("UnitCost").GetComponent<Text>().text = itemCost.ToString();
         shopItemTransform.Find("Image").GetComponent<Image>().sprite = Unit.GetSprite(unitType, true);
         shopItemTransform.GetComponent<Button>().onClick.AddListener(
-            () => { tryBuyUnit(unitType); }
+            () => { TryBuyUnit(unitType); }
         );
 
         return shopItemTransform;
     }
 
-    public void tryBuyUnit(UnitType unitType)
+    public void TryBuyUnit(UnitType unitType)
     {
-        if (isActivePlayerGerman)
+        if (GameManager.isPlayerOneTurn)
         {
-            if (GameManager.cashP1 < Unit.GetCost(unitType))
-                Debug.Log("Jesteś biedny");
-            else
+            if (!(GameManager.cashP1 < Unit.GetCost(unitType)))
             {
                 GameManager.cashP1 -= Unit.GetCost(unitType);
-                Debug.Log("Skont masz piniążki?");
-                unitFactory.generateUnit(unitType, isActivePlayerGerman, selectedTown.transform.position);
+                unitFactory.GenerateUnit(unitType, GameManager.isPlayerOneTurn, selectedTown.transform.position);
                 SetVisible(false);
             }
         }
+
         else
+            if (!(GameManager.cashP2 < Unit.GetCost(unitType)))
         {
-            if (GameManager.cashP2 < Unit.GetCost(unitType))
-                Debug.Log("Jesteś biedny");
-            else
-            {
-                GameManager.cashP2 -= Unit.GetCost(unitType);
-                unitFactory.generateUnit(unitType, isActivePlayerGerman, selectedTown.transform.position);
-                Debug.Log("Skont masz piniążki?");
-                SetVisible(false);
-            }
+            GameManager.cashP2 -= Unit.GetCost(unitType);
+            unitFactory.GenerateUnit(unitType, GameManager.isPlayerOneTurn, selectedTown.transform.position);
+            SetVisible(false);
         }
     }
 }

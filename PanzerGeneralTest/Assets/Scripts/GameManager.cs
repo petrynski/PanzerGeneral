@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
@@ -11,22 +7,21 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    bool isPlayerOneTurn;
-    private bool isShowing = false;
+    private bool isExitPopupVisible = false;
     public Canvas popUp;
     public Canvas germanWins;
     public Canvas ZsrrWins;
     public Text playerText;
     public Text cashText;
     public Tilemap fogP1, fogP2;
+    public static bool isPlayerOneTurn;
     public static List<Unit> germanUnits = new List<Unit>();
     public static List<Unit> zsrrUnits = new List<Unit>();
     public static List<Town> germanTowns = new List<Town>();
     public static List<Town> zsrrTowns = new List<Town>();
     public static int cashP1, cashP2;
-    [SerializeField]
     public UI_Shop uiShop;
-    // Start is called before the first frame update
+
     void Start()
     {
         cashP1 = cashP2 = 250;
@@ -35,54 +30,35 @@ public class GameManager : MonoBehaviour
         cashText.text = "Piniążki: " + cashP1.ToString();
         TilemapRenderer tr = fogP2.GetComponent<TilemapRenderer>();
         tr.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
-        foreach(var unit in zsrrUnits)
-        {
-            unit.unitPhase = ActivityPhase.noOperation;
-            unit.GetUMC().SetHasMoved(true);
-            unit.GetUMC().SetActivePlayer(false);
-        }
+
+        foreach (var unit in zsrrUnits)
+            unit.Disable();
     }
 
     private void Update()
     {   
         if (isPlayerOneTurn)
-        {
             cashText.text = "Money: " + cashP1.ToString();
-        }
+        
         else
-        {
             cashText.text = "Money: " + cashP2.ToString();
-        }
+        
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
             ExitPopUp();
-        }
+        
         if(germanTowns.Count == 0)
             ZsrrWins.gameObject.SetActive(true);
+
         if(zsrrTowns.Count == 0)
             germanWins.gameObject.SetActive(true);
     }
 
-    private static void SwitchPlayer(List<Unit> currentlyActive, List<Unit> nextActive, List<Town> currActTowns, List<Town> nextActTowns)
+    private static void SwitchPlayer(List<Unit> currentlyActiveUnits, List<Unit> toBeActiveUnits, List<Town> currentlyActiveTowns, List<Town> toBeActiveTowns)
     {
-        foreach(var unit in currentlyActive)
-        {
-            unit.unitPhase = ActivityPhase.noOperation;
-            unit.GetUMC().SetHasMoved(true);
-            unit.GetUMC().SetActivePlayer(false);
-            unit.GetUMC().Move(new Vector2(0,0), unit.speed);
-        }
-        foreach(var unit in nextActive)
-        {
-            unit.unitPhase = ActivityPhase.moveOrReplenish;
-            unit.GetUMC().SetHasMoved(false);
-            unit.GetUMC().SetActivePlayer(true);
-        }
-        foreach (var town in currActTowns)
-            town.activePlayer = false;
-        foreach (var town in nextActTowns)
-            town.activePlayer = true;
-
+        foreach (var unit in currentlyActiveUnits)
+            unit.Disable();
+        foreach (var unit in toBeActiveUnits)
+            unit.Enable();
     }
 
     public void EndTurn()
@@ -98,8 +74,8 @@ public class GameManager : MonoBehaviour
             tr.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
             tr = fogP1.GetComponent<TilemapRenderer>();
             tr.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
-
         }
+
         else
         {
             SwitchPlayer(germanUnits,zsrrUnits, germanTowns, zsrrTowns);
@@ -108,7 +84,6 @@ public class GameManager : MonoBehaviour
             tr.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
             tr = fogP2.GetComponent<TilemapRenderer>();
             tr.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
-
         }
         uiShop.ChangeNation(isPlayerOneTurn);
         uiShop.SetVisible(false);
@@ -121,8 +96,8 @@ public class GameManager : MonoBehaviour
 
     public void ExitPopUp()
     {
-        isShowing = !isShowing;
-        popUp.gameObject.SetActive(isShowing);
+        isExitPopupVisible = !isExitPopupVisible;
+        popUp.gameObject.SetActive(isExitPopupVisible);
     }
     
 }

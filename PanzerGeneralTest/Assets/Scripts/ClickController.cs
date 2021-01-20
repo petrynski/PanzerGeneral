@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+// Klasa odpowiedzialna za interakcję użytkownika z jednostkami - wybieranie jednostki i wydawanie im rozkazów.
 
 public class ClickController : MonoBehaviour
 {
@@ -12,10 +11,7 @@ public class ClickController : MonoBehaviour
         selectedUnit = collider.GetComponent<Unit>();
 
         if (selectedUnit != null)
-        {
             selectedUnit.SetSelectedVisible(true);
-            Debug.Log(name + " selected");
-        }
     }
 
     private void Update()
@@ -44,11 +40,8 @@ public class ClickController : MonoBehaviour
                     {
                         attackedUnit = hit.collider.GetComponent<Unit>();
                         if (attackedUnit != null)
-                        { 
-                            Debug.Log(selectedUnit.ToString() + " atakuje " + attackedUnit.ToString());
                             selectedUnit.Attack(attackedUnit, true);
-                        }
-                        //TODO przepiąć do UMC w fazie ruchu
+
                         else
                         {
                             Town capturedTown = hit.collider.GetComponent<Town>();
@@ -56,12 +49,10 @@ public class ClickController : MonoBehaviour
                             {
                                 if (selectedUnit.isGerman && !capturedTown.isGerman)
                                 {
-                                    Debug.Log(capturedTown.ToString() + " zostało podbite przez Nazistów");
                                     capturedTown.CaptureTown();
                                 }
                                 else if (!selectedUnit.isGerman && capturedTown.isGerman)
                                 {
-                                    Debug.Log(capturedTown.ToString() + " zostało podbite przez ZSRR");  
                                     capturedTown.CaptureTown();
                                 }
                             }

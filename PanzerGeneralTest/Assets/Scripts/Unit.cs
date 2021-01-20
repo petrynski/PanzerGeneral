@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
 
 public enum ActivityPhase : int
 {
@@ -22,6 +17,7 @@ public enum UnitType : int
     armoredCar = 3
 }
 
+// Klasa odpowiada za logikę działania jednostki. Tutaj zmienia się stan jednostki, następują interakcje między nimi i wydawane są polecenia poruszania się do unit movement controllera (UMC).
 public class Unit : MonoBehaviour
 {
     public UnitType unitType;
@@ -31,12 +27,16 @@ public class Unit : MonoBehaviour
     public float currentHP;
     public float maxHP;
     public int attackRange;
-    public Text text; 
     public int vision;
     public int speed;
-    private float[,] attackEffectivity;
-    private static int[] rewardsTable = new int[4] {30, 210, 150, 90};
-    private static int[] costTable = new int[4] {50, 350, 250, 150};
+    public Text text;
+    private static readonly float[,] attackEffectivity = new float[4, 4]
+        {
+            {0.2f, 0.1f, 0.6f, 0.2f}, {0.4f, 0.2f, 0.2f, 0.6f},
+            {0.1f, 0.6f, 0.2f, 0.4f}, {0.6f, 0.1f, 0.2f, 0.2f}
+        };
+    private static readonly int[] rewardsTable = new int[4] {30, 210, 150, 90};
+    private static readonly int[] costTable = new int[4] {50, 350, 250, 150};
     public bool isGerman;
 
     private void Start()
@@ -51,7 +51,7 @@ public class Unit : MonoBehaviour
             case UnitType.infantry:
                 maxHP = 10f;
                 attackRange = 1;
-                vision = 2;
+                vision = 3;
                 speed = 2;
                 break;
 
@@ -72,18 +72,12 @@ public class Unit : MonoBehaviour
             case UnitType.armoredCar:
                 maxHP = 10f;
                 attackRange = 1;
-                vision = 3;
+                vision = 4;
                 speed = 3;
                 break;
         }
         currentHP = maxHP;
         text.text = ((int)maxHP).ToString();
-
-        attackEffectivity = new float[4, 4]
-        {
-            {0.2f, 0.1f, 0.6f, 0.2f}, {0.4f, 0.2f, 0.2f, 0.6f},
-            {0.1f, 0.6f, 0.2f, 0.4f}, {0.6f, 0.1f, 0.2f, 0.2f}
-        };
 
         if (isGerman)
         {
@@ -95,6 +89,7 @@ public class Unit : MonoBehaviour
             GameManager.zsrrUnits.Add(this);
             text.color = Color.red;
         }
+        umc.vision = vision;
     }
 
     internal void Attack(Unit attackedUnit, bool attackedFirst)
@@ -105,19 +100,16 @@ public class Unit : MonoBehaviour
             if (attackedUnit.currentHP <= 0)
             {
                 if (isGerman)
-                {
                     GameManager.cashP1 += rewardsTable[(int)attackedUnit.unitType];
-                }
+
                 else
-                {
                     GameManager.cashP2 += rewardsTable[(int)attackedUnit.unitType];
-                }
+
                 attackedUnit.Die();
             }
             else if (attackedFirst)
-            {
                 attackedUnit.Attack(this,false);
-            }
+
             attackedUnit.text.text = Math.Round(attackedUnit.currentHP,1).ToString();
             unitPhase = ActivityPhase.noOperation;
             umc.ShowUnitRange(false, unitPhase, vision);
@@ -126,13 +118,13 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
+        umc = GetComponent<UnitMovementController>();
         selectedGameObject = transform.Find("Selected").gameObject;
         SetSelectedVisible(false);
     }
 
     public void SetSelectedVisible(bool visible)
     {
-        umc = this.GetComponent<UnitMovementController>();
         selectedGameObject.SetActive(visible);
         if (unitPhase == ActivityPhase.moveOrReplenish)
             umc.ShowUnitRange(visible, ActivityPhase.moveOrReplenish, speed);
@@ -144,30 +136,33 @@ public class Unit : MonoBehaviour
 
     public void Move(Vector2 destination)
     {
-        umc = this.GetComponent<UnitMovementController>();
         umc.Move(destination, speed);
         if (umc.GetHasMoved())
-        {
             unitPhase = ActivityPhase.attack;
-        }
-    }
 
-    public UnitMovementController GetUMC()
-    {
-        return umc;
     }
 
     private void Die()
     {
         if (isGerman)
-        {
             GameManager.germanUnits.Remove(this);
-        }
+
         else
-        {
             GameManager.zsrrUnits.Remove(this);
-        }
+
         Destroy(this.gameObject);
+    }
+
+    public void Disable()
+    {
+        unitPhase = ActivityPhase.noOperation;
+        umc.SetHasMoved(true);
+    }
+
+    public void Enable()
+    {
+        unitPhase = ActivityPhase.moveOrReplenish;
+        umc.SetHasMoved(false);
     }
 
     public static int GetCost(UnitType unitType)

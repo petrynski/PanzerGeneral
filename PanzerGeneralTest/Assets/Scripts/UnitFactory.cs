@@ -1,18 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UnitFactory : MonoBehaviour
 {
     public GameObject germanUnit;
     public GameObject zsrrUnit;
 
-    public void generateUnit(UnitType unitType, bool isGerman, Vector3 startPosition)
+    public void GenerateUnit(UnitType unitType, bool isGerman, Vector3 startPosition)
     {
-        Debug.Log("Twoja stara jeździ na żółwiu");
         GameObject unitGO;
+
         if (isGerman)
             unitGO = Instantiate(germanUnit, startPosition, Quaternion.identity);
+
         else
             unitGO = Instantiate(zsrrUnit, startPosition, Quaternion.identity);
         
