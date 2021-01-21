@@ -13,14 +13,14 @@ public class Town : MonoBehaviour
     {
         if (isGerman)
             GameManager.germanTowns.Add(this);
-        
+
         else
             GameManager.zsrrTowns.Add(this);
     }
 
     private void OnMouseUp()
     {
-        if(GameManager.isPlayerOneTurn == isGerman)
+        if (GameManager.isPlayerOneTurn == isGerman)
         {
             uiShop.SetSelectedTown(this);
             uiShop.SetVisible(true);

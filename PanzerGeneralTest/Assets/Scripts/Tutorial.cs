@@ -16,9 +16,9 @@ public class Tutorial : MonoBehaviour
 
     public void changeImage(bool forward)
     {
-        if(forward)
+        if (forward)
         {
-            if(currentSlide != slides.Length-1)
+            if (currentSlide != slides.Length - 1)
             {
                 currentSlide++;
                 currentImage.sprite = slides[currentSlide];

@@ -14,7 +14,7 @@ public class UnitFactory : MonoBehaviour
 
         else
             unitGO = Instantiate(zsrrUnit, startPosition, Quaternion.identity);
-        
+
         Unit unit = unitGO.GetComponent<Unit>();
         unitGO.GetComponent<SpriteRenderer>().sprite = Unit.GetSprite(unitType, isGerman);
         unit.unitType = unitType;

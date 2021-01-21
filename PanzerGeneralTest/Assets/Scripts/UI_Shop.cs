@@ -17,7 +17,7 @@ public class UI_Shop : MonoBehaviour
         items[1] = CreateItemButton("Czołg", Unit.GetCost(UnitType.tank), 1, UnitType.tank);
         items[2] = CreateItemButton("Anty Czoug", Unit.GetCost(UnitType.antiTank), 2, UnitType.antiTank);
         items[3] = CreateItemButton("Anty Piechota", Unit.GetCost(UnitType.armoredCar), 3, UnitType.armoredCar);
-        
+
         SetVisible(false);
     }
 

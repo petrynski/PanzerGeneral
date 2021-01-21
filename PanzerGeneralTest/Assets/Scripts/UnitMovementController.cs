@@ -43,8 +43,8 @@ public class UnitMovementController : MonoBehaviour
                 endPosition.x += xOffset;
                 endPosition.y += yOffset;
             }
-     
-        movementInput = new Vector2(0,0);
+
+        movementInput = new Vector2(0, 0);
         ShowUnitRange(false, ActivityPhase.moveOrReplenish, speed);
     }
 
@@ -57,7 +57,7 @@ public class UnitMovementController : MonoBehaviour
 
     void UpdateFogOfWar()
     {
-        Vector3Int currentUnitTile = fogOfWar.WorldToCell(transform.position); 
+        Vector3Int currentUnitTile = fogOfWar.WorldToCell(transform.position);
 
         if (currentUnitTile.y % 2 == 0)
             for (int y = -vision; y <= vision; y++)
@@ -66,7 +66,7 @@ public class UnitMovementController : MonoBehaviour
         else
             for (int y = -vision; y <= vision; y++)
                 for (int x = -vision + ((Math.Abs(y) + 1) / 2); x <= vision - (Math.Abs(y) / 2); x++)
-                            fogOfWar.SetTile(currentUnitTile + new Vector3Int(x, y, 0), null);
+                    fogOfWar.SetTile(currentUnitTile + new Vector3Int(x, y, 0), null);
     }
 
     public void ShowUnitRange(bool visible, ActivityPhase ap, int range)
@@ -74,7 +74,7 @@ public class UnitMovementController : MonoBehaviour
         Vector3Int currentTile = rangeMap.WorldToCell(transform.position);
         if (currentTile.y % 2 == 0)
             for (int y = -range; y <= range; y++)
-                for (int x = -range + (Math.Abs(y)/2); x <= range-((Math.Abs(y)+1)/2); x++)
+                for (int x = -range + (Math.Abs(y) / 2); x <= range - ((Math.Abs(y) + 1) / 2); x++)
                     if (visible)
                     {
                         if (ap == ActivityPhase.moveOrReplenish)
@@ -82,7 +82,7 @@ public class UnitMovementController : MonoBehaviour
                             rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), highlightTile);
                             rangeMap.color = Color.white;
                         }
-                        else if(ap == ActivityPhase.attack)
+                        else if (ap == ActivityPhase.attack)
                         {
                             rangeMap.SetTile(currentTile + new Vector3Int(x, y, 0), highlightTile);
                             rangeMap.color = Color.red;
@@ -141,7 +141,7 @@ public class UnitMovementController : MonoBehaviour
                         return true;
                 }
                 else
-                {   
+                {
                     if (x >= -range + ((Math.Abs(y) + 1) / 2) && x <= range - (Math.Abs(y) / 2))
                         return true;
                 }

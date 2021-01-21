@@ -36,20 +36,20 @@ public class GameManager : MonoBehaviour
     }
 
     private void Update()
-    {   
+    {
         if (isPlayerOneTurn)
             cashText.text = "Money: " + cashP1.ToString();
-        
+
         else
             cashText.text = "Money: " + cashP2.ToString();
-        
+
         if (Input.GetKeyDown(KeyCode.Escape))
             ExitPopUp();
-        
-        if(germanTowns.Count == 0)
+
+        if (germanTowns.Count == 0)
             ZsrrWins.gameObject.SetActive(true);
 
-        if(zsrrTowns.Count == 0)
+        if (zsrrTowns.Count == 0)
             germanWins.gameObject.SetActive(true);
     }
 
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         {
             cashP1 += 10;
             cashP2 += 10;
-            SwitchPlayer(zsrrUnits,germanUnits, zsrrTowns, germanTowns);
+            SwitchPlayer(zsrrUnits, germanUnits, zsrrTowns, germanTowns);
             playerText.text = "Tura gracza 1";
             TilemapRenderer tr = fogP2.GetComponent<TilemapRenderer>();
             tr.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
 
         else
         {
-            SwitchPlayer(germanUnits,zsrrUnits, germanTowns, zsrrTowns);
+            SwitchPlayer(germanUnits, zsrrUnits, germanTowns, zsrrTowns);
             playerText.text = "Tura gracza 2";
             TilemapRenderer tr = fogP1.GetComponent<TilemapRenderer>();
             tr.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
         uiShop.ChangeNation(isPlayerOneTurn);
         uiShop.SetVisible(false);
     }
-    
+
     public void QuitToMenu()
     {
         SceneManager.LoadScene("Scenes/MainMenu");
@@ -99,5 +99,5 @@ public class GameManager : MonoBehaviour
         isExitPopupVisible = !isExitPopupVisible;
         popUp.gameObject.SetActive(isExitPopupVisible);
     }
-    
+
 }

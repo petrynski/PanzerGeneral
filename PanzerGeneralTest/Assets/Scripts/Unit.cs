@@ -35,8 +35,8 @@ public class Unit : MonoBehaviour
             {0.2f, 0.1f, 0.6f, 0.2f}, {0.4f, 0.2f, 0.2f, 0.6f},
             {0.1f, 0.6f, 0.2f, 0.4f}, {0.6f, 0.1f, 0.2f, 0.2f}
         };
-    private static readonly int[] rewardsTable = new int[4] {30, 210, 150, 90};
-    private static readonly int[] costTable = new int[4] {50, 350, 250, 150};
+    private static readonly int[] rewardsTable = new int[4] { 30, 210, 150, 90 };
+    private static readonly int[] costTable = new int[4] { 50, 350, 250, 150 };
     public bool isGerman;
 
     private void Start()
@@ -108,9 +108,9 @@ public class Unit : MonoBehaviour
                 attackedUnit.Die();
             }
             else if (attackedFirst)
-                attackedUnit.Attack(this,false);
+                attackedUnit.Attack(this, false);
 
-            attackedUnit.text.text = Math.Round(attackedUnit.currentHP,1).ToString();
+            attackedUnit.text.text = Math.Round(attackedUnit.currentHP, 1).ToString();
             unitPhase = ActivityPhase.noOperation;
             umc.ShowUnitRange(false, unitPhase, vision);
         }
@@ -167,20 +167,20 @@ public class Unit : MonoBehaviour
 
     public static int GetCost(UnitType unitType)
     {
-        return costTable[(int) unitType];
+        return costTable[(int)unitType];
     }
 
     public static Sprite GetSprite(UnitType unitType, bool isGerman)
     {
         if (isGerman)
             switch ((int)unitType)
-            {   
+            {
                 default:
                 case 0: return Resources.Load<Sprite>("Sprites/NiemieckaPiech");
                 case 1: return Resources.Load<Sprite>("Sprites/NiemieckiCzolg");
                 case 2: return Resources.Load<Sprite>("Sprites/NiemieckiPczolg");
                 case 3: return Resources.Load<Sprite>("Sprites/NiemieckaPpiech");
-            }    
+            }
         else
             switch ((int)unitType)
             {

@@ -4,7 +4,7 @@ public class CameraController : MonoBehaviour
 {
     public float panSpeed = 20f;
     public float panBorderThickness = 10f;
-    
+
     [SerializeField]
     float zoomFactor = 1.0f;
 
@@ -34,14 +34,14 @@ public class CameraController : MonoBehaviour
 
         Vector3 pos = transform.position;
 
-        if(Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness)
-            if(pos.y < 13)
+        if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness)
+            if (pos.y < 13)
                 pos.y += panSpeed * Time.deltaTime * zoomFactor;
-        
+
         if (Input.GetKey("s") || Input.mousePosition.y <= panBorderThickness)
             if (pos.y > 2)
                 pos.y -= panSpeed * Time.deltaTime * zoomFactor;
-        
+
         if (Input.GetKey("a") || Input.mousePosition.x <= panBorderThickness)
             if (pos.x > 10)
                 pos.x -= panSpeed * Time.deltaTime * zoomFactor;

@@ -20,17 +20,17 @@ public class ClickController : MonoBehaviour
         {
             if (selectedUnit != null)
                 selectedUnit.SetSelectedVisible(false);
-            
+
             selectedUnit = null;
         }
 
-        if(Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
         {
             if (selectedUnit != null)
             {
                 if (selectedUnit.unitPhase == ActivityPhase.moveOrReplenish)
                     selectedUnit.Move((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                
+
                 if (selectedUnit.unitPhase == ActivityPhase.attack)
                 {
                     Unit attackedUnit;
