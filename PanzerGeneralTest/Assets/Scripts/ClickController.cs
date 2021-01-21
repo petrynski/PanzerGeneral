@@ -23,7 +23,7 @@ public class ClickController : MonoBehaviour
 
             selectedUnit = null;
         }
-
+        
         if (Input.GetMouseButtonDown(1))
         {
             if (selectedUnit != null)
@@ -58,6 +58,18 @@ public class ClickController : MonoBehaviour
                             }
                         }
                     }
+                }
+            }
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (selectedUnit != null)
+            {
+                if (selectedUnit.unitPhase == ActivityPhase.moveOrReplenish)
+                {
+                    selectedUnit.Move(selectedUnit.transform.position);
+                    selectedUnit.unitPhase = ActivityPhase.attack;
                 }
             }
         }
