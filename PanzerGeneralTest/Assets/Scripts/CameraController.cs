@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
 
     private float originalSize = 0f;
 
-    private Camera thisCamera;
+    public static Camera thisCamera;
 
     private float maxZoom = 1.0f;
     private float minZoom = 0.3f;

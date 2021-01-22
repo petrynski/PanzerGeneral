@@ -59,6 +59,9 @@ public class GameManager : MonoBehaviour
             unit.Disable();
         foreach (var unit in toBeActiveUnits)
             unit.Enable();
+        Vector3 camerapos = toBeActiveTowns[0].transform.position;
+        camerapos.z = -1.54f;
+        CameraController.thisCamera.transform.position = camerapos;
     }
 
     public void EndTurn()
