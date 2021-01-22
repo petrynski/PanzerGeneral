@@ -15,16 +15,21 @@ public class GameManager : MonoBehaviour
     public Text cashText;
     public Tilemap fogP1, fogP2;
     public static bool isPlayerOneTurn;
-    public static List<Unit> germanUnits = new List<Unit>();
-    public static List<Unit> zsrrUnits = new List<Unit>();
-    public static List<Town> germanTowns = new List<Town>();
-    public static List<Town> zsrrTowns = new List<Town>();
+    public static List<Unit> germanUnits;
+    public static List<Unit> zsrrUnits;
+    public static List<Town> germanTowns;
+    public static List<Town> zsrrTowns;
     public static int cashP1, cashP2;
     public UI_Shop uiShop;
 
     void Start()
     {
-        cashP1 = cashP2 = 250;
+    germanUnits = new List<Unit>();
+    zsrrUnits = new List<Unit>();
+    germanTowns = new List<Town>();
+    zsrrTowns = new List<Town>();
+
+    cashP1 = cashP2 = 250;
         isPlayerOneTurn = true;
         playerText.text = "Tura gracza 1";
         cashText.text = "Piniążki: " + cashP1.ToString();
@@ -59,9 +64,12 @@ public class GameManager : MonoBehaviour
             unit.Disable();
         foreach (var unit in toBeActiveUnits)
             unit.Enable();
-        Vector3 camerapos = toBeActiveTowns[0].transform.position;
-        camerapos.z = -1.54f;
-        CameraController.thisCamera.transform.position = camerapos;
+
+        if (isPlayerOneTurn)
+            CameraController.thisCamera.transform.position = new Vector3(16.0f, 7.0f, -1.54f);
+
+        else
+            CameraController.thisCamera.transform.position = new Vector3(33.0f, 7.0f, -1.54f);
     }
 
     public void EndTurn()

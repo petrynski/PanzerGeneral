@@ -11,6 +11,7 @@ public class Town : MonoBehaviour
 
     void Start()
     {
+        new WaitForSeconds(1);
         if (isGerman)
             GameManager.germanTowns.Add(this);
 

@@ -41,6 +41,7 @@ public class Unit : MonoBehaviour
 
     private void Start()
     {
+        new WaitForSeconds(1);
         SetUp();
     }
 
@@ -88,6 +89,7 @@ public class Unit : MonoBehaviour
         {
             GameManager.zsrrUnits.Add(this);
             text.color = Color.red;
+            unitPhase = ActivityPhase.noOperation;
         }
         umc.vision = vision;
     }
